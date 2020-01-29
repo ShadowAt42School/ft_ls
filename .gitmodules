@@ -1,0 +1,3 @@
+[submodule "libs/ft_stdio"]
+	path = libs/ft_stdio
+	url = git@github.com:ShadowAt42School/ft_stdio.git
