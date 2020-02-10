@@ -1,5 +1,3 @@
 a.out
 a.out.*
-libs/
-libs/ft_stdio/
 src/*.o
