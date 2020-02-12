@@ -6,47 +6,49 @@
 #    By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/27 21:42:08 by maghayev          #+#    #+#              #
-#    Updated: 2020/02/03 21:53:28 by maghayev         ###   ########.fr        #
+#    Updated: 2020/02/11 22:05:22 by maghayev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
-ORANGE = "\033[33m\c"
+YELLOW = "\033[33m\c"
+UNDERLINE = "\033[4m\c"
 PURPLE = "\033[35m\c"
 NC="\033[0m\c"
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
-DEPS = libs/ft_stdio/ft_stdio.h
+CFLAGS = -Wall -Wextra -Werror
 SRC  = $(wildcard src/*.c)
+LIBS = -Iheaders/ -Ilibs/ft_stdio/headers/ -Ilibs/ft_stdio/libs/libft/headers/
+ALIBS = libs/ft_stdio/libftprintf.a
 
-ROOTLIBS = libs/ft_stdio/libftprintf.a
+OBJECT = $(SRC:.c=.o)
 
-OBJECT = $(SRC:.c=.o) $(SRCH:.c=.o)
+DEPS = ft_stdio/
 
-%.a: stdiomake
-	@echo $(PURPLE)
-	@echo "Finished building Dep. Libriaries"
-	@echo $(NC)
-
-%.o: %.c $(DEPS)
-	@echo $(ORANGE)
-	$(CC) $(CFLAGS) -c -o $@ $<
+%.o: %.c
+	@echo $(YELLOW)
+	$(CC) $(CFLAGS) $(LIBS) -o $@ -c $<
 	@echo $(NC)
 
 all: $(NAME)
 
-$(NAME): $(ROOTLIBS) $(OBJECT)
-	$(CC) $(CFLAGS) main.c $(OBJECT) $(ROOTLIBS)
+$(NAME): | deps $(OBJECT)
+	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT)
 
-stdiomake:
-	@make -C libs/ft_stdio/
+deps: makedep
+	@echo $(UNDERLINE)
+	@echo "Finished building Dep. Libriaries"
+	@echo $(NC)
 
-clean:
-	@make clean -C libs/ft_stdio/
-	@echo $(PURPLE)
-	@echo "whaaaaa, claning printf..."
+clean: cleandep
+	@echo $(YELLOW)
+	@echo "ft_ls clean started"
 	@/bin/rm -f $(OBJECT)
-	@echo "There! Done!"
+	@echo $(NC)
+	@echo "..........."
+	@echo $(YELLOW)
+	@echo "ft_ls clean finished"
 	@echo $(NC)
 
 fclean: clean
@@ -55,5 +57,12 @@ fclean: clean
 	@echo "stdio has been deleted! *sign*"
 
 re: fclean all
+
+makedep: libs/$(DEPS)
+	@make -C $<
+	@echo $(NC)
+
+cleandep: libs/$(DEPS)
+	@make clean -C $<
 
 .PHONY: stdiomake all clean fclean re

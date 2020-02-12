@@ -6,11 +6,11 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 23:46:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/04 22:28:04 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/11 19:50:18 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libs/ft_stdio/ft_stdio.h"
+#include "ft_stdio.h"
 
 int main(int argc, char const *argv[])
 {
@@ -24,5 +24,6 @@ int main(int argc, char const *argv[])
 	options[3] = (t_option){.shortc = 'r'};
 	options[4] = (t_option){.shortc = 't'};
 	cl_engine((char **)argv, options, argc);
+	ft_printf("%s\n", cl_get_copt('l'));
 	return 0;
 }
