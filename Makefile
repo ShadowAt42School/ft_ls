@@ -6,7 +6,7 @@
 #    By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/27 21:42:08 by maghayev          #+#    #+#              #
-#    Updated: 2020/02/11 22:05:22 by maghayev         ###   ########.fr        #
+#    Updated: 2020/02/17 16:20:20 by maghayev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ DEPS = ft_stdio/
 
 %.o: %.c
 	@echo $(YELLOW)
-	$(CC) $(CFLAGS) $(LIBS) -o $@ -c $<
+	$(CC) $(CFLAGS) $(LIBS) -g -o $@ -c $<
 	@echo $(NC)
 
 all: $(NAME)
