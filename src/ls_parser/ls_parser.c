@@ -1,29 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ls_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/13 23:46:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/18 22:08:13 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/18 20:34:39 by maghayev          #+#    #+#             */
+/*   Updated: 2020/02/18 20:35:03 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-int main(int argc, char const **argv)
-{
-	t_option	options[5];
-
-	argc--;
-	argv++;
-	options[0] = (t_option){.shortc = 'l'};
-	options[1] = (t_option){.shortc = 'R'};
-	options[2] = (t_option){.shortc = 'a'};
-	options[3] = (t_option){.shortc = 'r'};
-	options[4] = (t_option){.shortc = 't'};
-	cl_init((char **)argv, options, 5);
-	ls_engine();
-	return 0;
-}

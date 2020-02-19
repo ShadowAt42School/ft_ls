@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   engine.c                                           :+:      :+:    :+:   */
+/*   ls_engine.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:30:31 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/17 19:49:13 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/18 22:13:51 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_ls.h"
+#include "ft_ls.h"
 
-void	ls_engine()
+static void		ls_parse_engine(char *directory)
 {
-	unsigned int	flags;
+	DIR				*dirstream;
+	struct dirent	*dirent;
 
-	ls_engine_parse_flags(&flags);
+	ft_printf("%s\n", directory);
+	dirstream = opendir(directory);
+	while ((dirent = readdir(dirstream)))
+		ft_printf("%s\n", dirent->d_name);
 }
 
-void ls_engine_parse_flags(unsigned int *flags)
+void			ls_engine()
 {
-	t_option		*option;
-	unsigned char	index;
+	static char 	*argument;
 
-	*flags = 0;
-	index = 0;
-	while (index < 5)
-	{
-		if ((option = cl_get_sopt(FLAGS_STR[index])))
-			*flags |= (1 << (index));
-		index++;
-	}
-	ft_printf("%u\n", *flags);
+	ls_flags_parse();
+	while ((argument = cl_get_argument()))
+		ls_parse_engine(argument);
 }

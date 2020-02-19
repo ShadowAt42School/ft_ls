@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ls_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/13 23:46:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/18 22:08:13 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/17 21:28:38 by maghayev          #+#    #+#             */
+/*   Updated: 2020/02/18 22:15:15 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int main(int argc, char const **argv)
-{
-	t_option	options[5];
+static t_uint	g_flags;
 
-	argc--;
-	argv++;
-	options[0] = (t_option){.shortc = 'l'};
-	options[1] = (t_option){.shortc = 'R'};
-	options[2] = (t_option){.shortc = 'a'};
-	options[3] = (t_option){.shortc = 'r'};
-	options[4] = (t_option){.shortc = 't'};
-	cl_init((char **)argv, options, 5);
-	ls_engine();
-	return 0;
+void	ls_flags_parse()
+{
+	t_option		*option;
+	t_uint			flags;
+	unsigned char	index;
+
+	flags = 0;
+	index = 0;
+	while (index < 5)
+	{
+		if ((option = cl_get_sopt(FLAGS_STR[index])))
+			flags |= (1 << (index));
+		index++;
+	}
+	g_flags = flags;
+}
+
+t_bool	ls_is_flag(t_uint flag)
+{
+	t_bool d = ((g_flags & flag) == flag);
+	return (d);
+}
+
+void	ls_disable_flag(t_uint flag)
+{
+	g_flags &= flag;
 }
