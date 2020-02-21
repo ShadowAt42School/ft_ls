@@ -1,0 +1,2 @@
+1) Add support for no arguments to ls
+2) expansion of ~

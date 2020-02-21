@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 21:28:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/18 22:15:15 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/19 21:56:18 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ls_flags_parse()
 
 	flags = 0;
 	index = 0;
-	while (index < 5)
+	while (index < FLAGS_COUNT)
 	{
 		if ((option = cl_get_sopt(FLAGS_STR[index])))
 			flags |= (1 << (index));
