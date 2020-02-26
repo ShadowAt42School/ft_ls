@@ -1,2 +1,4 @@
 1) Add support for no arguments to ls
 2) expansion of ~
+3) When sorting -> 1st sort arguments always lexi, 2nd - sort directory by flags
+4) Add support of argument count to cl_command_line

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/19 23:13:08 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/23 01:49:20 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 # define FLAGS_COUNT	5
 # define FLAGS_STR		"lRrta"
-# define FLAG_L			1
-# define FLAG_BR		2
-# define FLAG_R			4
-# define FLAG_T 		8
-# define FLAG_A 		16
+# define FLAG_L			0
+# define FLAG_BR		1
+# define FLAG_R			2
+# define FLAG_T 		3
+# define FLAG_A 		4
 
 typedef struct		s_name {
 	char			*name;
@@ -52,8 +52,8 @@ void	ls_engine();
 /*
 **	Parsers
 */
-void	ls_parse_directory(char *directory);
-t_bool	ls_parse_entry(char *entry);
+void	ls_parse_directory(char *dir);
+t_basic	*ls_parse_entry(char *entry);
 
 /*
 **	Flags

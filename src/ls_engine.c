@@ -6,22 +6,22 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:30:31 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/20 22:23:40 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/23 01:48:46 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		ls_parse_engine(char *item)
+static void		ls_parse_engine(char *path)
 {
-	struct stat		root_item;
+	struct stat		item;
 
-	if(stat(item, &root_item) == -1)
-		perror(item);
-	if (S_ISDIR(root_item.st_mode))
-		ls_parse_directory(item);
+	if(stat(path, &item) == -1)
+		perror(path);
+	if (S_ISDIR(item.st_mode))
+		ls_parse_directory(path);
 	else
-		ls_parse_entry(item);
+		ls_parse_entry(path);
 }
 
 void			ls_engine()
@@ -30,6 +30,7 @@ void			ls_engine()
 	static char		path[PATH_MAX + 1];
 
 	ls_flags_parse();
+	// add argument sorting
 	while ((argument = cl_get_argument()))
 	{
 		ft_memcpy(path, argument, ft_strlen(argument));
