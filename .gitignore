@@ -2,3 +2,4 @@ a.out
 a.out.*
 src/**/*.o
 libs/
+test.c

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:30:31 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/23 01:48:46 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/26 22:52:28 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		ls_parse_engine(char *path)
 	if (S_ISDIR(item.st_mode))
 		ls_parse_directory(path);
 	else
-		ls_parse_entry(path);
+		ls_parse_entry(path, path);
 }
 
 void			ls_engine()

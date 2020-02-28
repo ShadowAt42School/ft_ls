@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_processors.c                                    :+:      :+:    :+:   */
+/*   ls_flag_a.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/26 00:38:09 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/27 22:51:39 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/26 21:37:09 by maghayev          #+#    #+#             */
+/*   Updated: 2020/02/26 22:17:39 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_bool	ls_dir_processing(struct dirent *ent)
+t_bool	ls_process_a(struct dirent *ent)
 {
-	t_bool		final;
-	char		flag;
-	char		*options;
-
-	options = DIR_PROCESS_OPTS_MAP;
-	final = FALSE;
-	while ((flag = ft_atoi(options)))
-	{
-		final = ls_process_a(ent);
-		options++;
-	}
-	return (final);
+	if (!ls_is_flag(FLAG_A) && ent->d_name[0] == '.')
+		return (FALSE);
+	return (TRUE);
 }

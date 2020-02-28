@@ -6,7 +6,7 @@
 #    By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/27 21:42:08 by maghayev          #+#    #+#              #
-#    Updated: 2020/02/18 22:16:58 by maghayev         ###   ########.fr        #
+#    Updated: 2020/02/27 22:53:44 by maghayev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NC="\033[0m\c"
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC  = $(wildcard src/*.c src/ls_parser/*.c)
+SRC  = $(wildcard src/*.c src/ls_parser/*.c src/ls_flags_components/*.c src/ls_parser/ls_entry_parsers/*.c)
 LIBS = -Iheaders/ -Ilibs/ft_stdio/headers/ -Ilibs/ft_stdio/libs/libft/headers/
 ALIBS = libs/ft_stdio/libftprintf.a
 
