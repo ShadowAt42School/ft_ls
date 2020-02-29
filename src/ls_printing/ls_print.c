@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_flags.c                                         :+:      :+:    :+:   */
+/*   ls_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/17 21:28:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/29 03:40:55 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/29 04:04:08 by maghayev          #+#    #+#             */
+/*   Updated: 2020/02/29 04:17:59 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_uint	g_flags;
-
-void	ls_flags_parse(void)
+void	ls_print(t_list *lst)
 {
-	t_option		*option;
-	unsigned char	index;
+	t_basic		*info;
 
-	index = 0;
-	while (index < FLAGS_COUNT)
+	while(lst)
 	{
-		if ((option = cl_get_sopt(FLAGS_STR[index])) && option->is_set)
-			g_flags |= (1 << index);
-		index++;
+		info = (t_basic*)lst->content;
+		if (ls_parse_long_listing())
+			ft_printf("%c%s %s %u %u %s %s %s\n",
+			info->access.type,
+			info->access.permissions,
+			info->links.links,
+			info->owner.st_uid,
+			info->owner.st_gid,
+			info->size.size,
+			"date",
+			info->name.name);
+		lst = lst->next;
 	}
-}
-
-t_bool	ls_is_flag(char *flag)
-{
-	t_uint f;
-
-	f = ft_atoi(flag);
-	return ((g_flags & (1 << f)) == (1 << f));
-}
-
-void	ls_disable_flag(t_uint flag)
-{
-	g_flags &= ~(1 << flag);
 }

@@ -6,40 +6,24 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/28 00:32:43 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/29 03:39:29 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ls_parse_owner(struct stat *istat, t_basic *basic, t_bool is_id)
+t_bool	ls_parse_long_listing(void)
 {
-	struct group	*guis;
-	struct passwd	*uids;
+	size_t	counter;
 
-	if (is_id)
+	counter = 0;
+	while (counter < FDETAILS_COUNT)
 	{
-		basic->owner.grpl = ft_sprintf(basic->owner.grp, "%u", istat->st_gid);
-		basic->owner.usrl = ft_sprintf(basic->owner.usr, "%u", istat->st_gid);
-		return ;
-	} else {
-		if ((guis = getgrgid(istat->st_gid)))
-			basic->owner.grpl = ft_pprintf(
-										&basic->owner.grp, "%s", guis->gr_name);
-		else
-			basic->owner.grpl = ft_sprintf(
-										basic->owner.grp, "%u", istat->st_gid);
-		if ((uids = getpwuid(istat->st_uid)))
-			basic->owner.usrl = ft_pprintf(
-										&basic->owner.usr, "%s", uids->pw_name);
-		else
-			basic->owner.usrl = ft_sprintf(
-										basic->owner.usr, "%u", istat->st_gid);
+		if (ls_is_flag(g_flag_fdetails[counter]))
+			return (TRUE);
+		counter++;
 	}
-	if (basic->owner.musrl < basic->owner.usrl)
-		basic->owner.musrl = basic->owner.usrl;
-	if (basic->owner.mgrpl < basic->owner.grpl)
-		basic->owner.mgrpl = basic->owner.grpl;
+	return (FALSE);
 }
 
 void	ls_parse_access(struct stat *istat, t_basic *basic)
@@ -50,12 +34,18 @@ void	ls_parse_access(struct stat *istat, t_basic *basic)
 	ls_parse_permissions(istat, basic);
 }
 
-void	ls_parse_size(struct stat *istat, t_basic *basic)
+void	ls_parse_name(struct stat *stat, t_basic *basic)
 {
-	basic->size.size = istat->st_size;
-	basic->size.sizel = ft_sprintf(basic->size.sizes, "%lu", istat->st_size);
-}
-
-void	ls_parse_name(t_basic *basic)
-{
+	if (S_ISDIR(stat->st_mode))
+		basic->name.marking = '/';
+	else if (S_ISFIFO(stat->st_mode))
+		basic->name.marking = '|';
+	else if (S_ISLNK(stat->st_mode))
+		basic->name.marking = '@';
+	else if (S_ISSOCK(stat->st_mode))
+		basic->name.marking = '=';
+	else if (basic->access.permissions[2] == 'x' ||
+		basic->access.permissions[5] == 'x' ||
+		basic->access.permissions[8] == 'x')
+		basic->name.marking = '*';
 }

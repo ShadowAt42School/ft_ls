@@ -6,13 +6,13 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 22:03:19 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/27 23:14:38 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/29 03:40:35 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void permission_parse_sticky(struct stat *istat, t_basic *basic)
+static void		permission_parse_sticky(struct stat *istat, t_basic *basic)
 {
 	t_bool	is_set_user_id;
 	t_bool	is_set_group_id;
@@ -33,7 +33,7 @@ static void permission_parse_sticky(struct stat *istat, t_basic *basic)
 		basic->access.permissions[8] = is_exec[2] == 'x' ? 't' : 'T';
 }
 
-void ls_parse_type(struct stat *istat, t_basic *basic)
+void			ls_parse_type(struct stat *istat, t_basic *basic)
 {
 	if (S_ISREG(istat->st_mode))
 		basic->access.type = '-';
@@ -51,7 +51,7 @@ void ls_parse_type(struct stat *istat, t_basic *basic)
 		basic->access.type = 's';
 }
 
-void	ls_parse_permissions(struct stat *istat, t_basic *basic)
+void			ls_parse_permissions(struct stat *istat, t_basic *basic)
 {
 	if (S_IRUSR & istat->st_mode)
 		basic->access.permissions[0] = 'r';
