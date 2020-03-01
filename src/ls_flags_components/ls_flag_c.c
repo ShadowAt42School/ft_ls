@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_flags.c                                         :+:      :+:    :+:   */
+/*   ls_flag_c.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/17 21:28:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/29 21:02:25 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/29 20:43:35 by maghayev          #+#    #+#             */
+/*   Updated: 2020/02/29 21:04:21 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_uint	g_flags;
-
-void	ls_flags_parse(void)
+void	ls_flag_c(struct stat *istat, t_basic *basic)
 {
-	t_option		*option;
-	unsigned char	index;
-
-	index = 0;
-	while (index < FLAGS_COUNT)
-	{
-		if ((option = cl_get_sopt(FLAGS_STR[index])) && option->is_set)
-			g_flags |= (1 << index);
-		index++;
-	}
-}
-
-t_bool	ls_is_flag(t_uint flag)
-{
-	return ((g_flags & (1 << flag)) == (1 << flag));
-}
-
-void	ls_disable_flag(t_uint flag)
-{
-	g_flags &= ~(1 << flag);
+	basic->date.time = istat->st_ctimespec;
 }

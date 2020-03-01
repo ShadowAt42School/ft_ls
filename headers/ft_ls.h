@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/29 04:10:09 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 00:33:20 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@
 # include <fcntl.h>
 # include "ft_stdio.h"
 
-# define FLAGS_COUNT			5
-# define FLAGS_STR				"lRrta"
-# define DIR_PROCESS_OPTS_MAP	"4"
-# define FLAG_L					"0"
-# define FLAG_BR				"1"
-# define FLAG_R					"2"
-# define FLAG_T 				"3"
-# define FLAG_A 				"4"
-
-# define FDETAILS_COUNT			1
-extern char			*g_flag_fdetails[FDETAILS_COUNT];
-
-# define DDETAILS_COUNT			1
-extern char			*g_flag_ddetails[DDETAILS_COUNT];
-
 typedef struct	s_paddings {
 	size_t			links;
 	size_t			usr;
@@ -53,17 +38,18 @@ typedef struct	s_dir {
 
 typedef struct	s_access {
 	char			type;
-	char			permissions[9];
+	char			extra;
+	char			permissions[10];
 }				t_access;
 
 typedef struct	s_links {
-	char			*links;
+	nlink_t			links;
 	size_t			linksl;
 }				t_links;
 
 typedef struct	s_ownership {
-	uid_t			st_uid;
-	gid_t			st_gid;
+	t_bool			usr_set;
+	t_bool			grp_set;			
 	char			*usr;
 	char			*grp;
 	size_t			usrl;
@@ -71,13 +57,14 @@ typedef struct	s_ownership {
 }				t_ownership;
 
 typedef struct	s_size {
-	char			*size;
+	off_t			size;
+	char			*rep;
 	size_t			sizel;
 }				t_size;
 
 typedef struct	s_date {
 	struct timespec	time;
-	char			*date;
+	char			*rep;
 }				t_date;
 
 typedef struct	s_name {
@@ -95,6 +82,29 @@ typedef struct	s_basic {
 	t_name			name;
 }				t_basic;
 
+# define FLAGS_COUNT			6
+# define FLAGS_STR				"lRrtac"
+# define FLAG_L					0
+# define FLAG_BR				1
+# define FLAG_R					2
+# define FLAG_T 				3
+# define FLAG_A 				4
+# define FLAG_C 				5
+
+# define FDETAILS_COUNT			1
+extern t_uint		g_flag_fdetails[FDETAILS_COUNT];
+
+# define DDETAILS_COUNT			1
+extern t_uint		g_flag_ddetails[DDETAILS_COUNT];
+
+# define DATA_SELECTORS			1
+extern t_uint		g_index_to_flag[DATA_SELECTORS];
+
+# define DATA_PARSE_FLAGS_COUNT	1
+
+typedef void	(*parse_data)(struct stat *, t_basic *);
+extern parse_data	g_flags_data[FLAGS_COUNT];
+
 /*
 **	Engine
 */
@@ -104,6 +114,7 @@ void			ls_engine();
 **	Processors
 */
 t_bool			ls_dir_processing(struct dirent *ent);
+void			ls_entry_process(struct stat *istat, t_basic *entry);
 
 /*
 **	Parser Engine
@@ -114,25 +125,27 @@ t_basic			*ls_parse_entry(char *entry, char *display_name);
 /*
 **	Entry parsers
 */
+void			ls_parse_defaults(struct stat *istat, t_basic *basic);
+
 void			ls_parse_name(struct stat *stat, t_basic *basic);
 t_bool			ls_parse_long_listing();
-void			ls_parse_owner(struct stat *istat, t_basic *basic);
-void			ls_parse_access(struct stat *istat, t_basic *basic);
-void			ls_parse_type(struct stat *istat, t_basic *basic);
-void			ls_parse_permissions(struct stat *istat, t_basic *basic);
-void			ls_parse_size(struct stat *istat, t_basic *basic);
-void			ls_parse_date(struct stat *stat, t_basic *basic);
 
 /*
 **	Flags
 */
 void			ls_flags_parse();
-t_bool			ls_is_flag(char *flag);
+t_bool			ls_is_flag(t_uint flag);
+
+/*
+**	HERE
+*/
 t_bool			ls_process_a(struct dirent *ent);
+void			ls_flag_c(struct stat *istat, t_basic *basic);
+void			ls_flag_big_f(struct stat *istat, t_basic *basic);
 
 /*
 **	Print
 */
-void			ls_print(t_list *lst);
+void			ls_print(t_list *lst, t_paddings *pads);
 
 #endif

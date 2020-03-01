@@ -6,7 +6,7 @@
 #    By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/27 21:42:08 by maghayev          #+#    #+#              #
-#    Updated: 2020/02/29 03:22:28 by maghayev         ###   ########.fr        #
+#    Updated: 2020/02/29 21:27:49 by maghayev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,26 @@ DEPS = ft_stdio/
 
 all: $(NAME)
 
+local: | cleanc $(OBJECT)
+	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT)
+
 $(NAME): | deps $(OBJECT)
 	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT)
 
 deps: makedep
 	@echo $(UNDERLINE)
 	@echo "Finished building Dep. Libriaries"
+	@echo $(NC)
+
+cleanc:
+	@echo $(YELLOW)
+	@echo "ft_ls clean started"
+	@/bin/rm -f $(OBJECT)
+	@/bin/rm -f a.out
+	@echo $(NC)
+	@echo "..........."
+	@echo $(YELLOW)
+	@echo "ft_ls clean finished"
 	@echo $(NC)
 
 clean: cleandep

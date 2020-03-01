@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 20:34:39 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/29 04:17:36 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 00:31:24 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 static void	ls_pars_dir_paddings(t_basic *info, t_paddings *pads)
 {
-	if (pads->links < info->links.linksl)
-		pads->links = info->links.linksl;
-	if (pads->usr < info->owner.usrl)
-		pads->usr = info->owner.usrl;
-	if (pads->grp < info->owner.grpl)
-		pads->grp = info->owner.grpl;
-	if (pads->size < info->size.sizel)
-		pads->size = info->size.sizel;
+	pads->links = ft_umax(info->links.linksl, pads->links);
+	pads->usr = ft_umax(info->owner.usrl, pads->usr);
+	pads->grp = ft_umax(info->owner.grpl, pads->grp);
+	pads->size = ft_umax(info->size.sizel, pads->size);
 }
 
 void		ls_parse_directory(char *dir)
@@ -46,7 +42,7 @@ void		ls_parse_directory(char *dir)
 	}
 	closedir(curd.stream);
 	ft_bzero(dir + curd.len - 1, PATH_MAX - curd.len - 1);
-	ls_print(lst);
+	ls_print(lst, &pads);
 }
 
 t_basic		*ls_parse_entry(char *entry, char *name)
@@ -58,13 +54,7 @@ t_basic		*ls_parse_entry(char *entry, char *name)
 		perror(entry);
 	info = ft_calloc(1, sizeof(t_basic));
 	info->name.len = ft_pprintf(&info->name.name, "%s", name);
-	ls_parse_name(&istat, info);
-	ls_parse_access(&istat, info);
-	info->links.linksl = ft_pprintf(
-								&info->links.links, "%lu", istat.st_nlink);
-	info->size.sizel = ft_pprintf(&info->size.size, "%lu", istat.st_size);
-	info->owner.st_uid = istat.st_uid;
-	info->owner.st_gid = istat.st_gid;
-	info->date.time = istat.st_mtimespec;
+	info->size.size = istat.st_size;
+	ls_parse_defaults(&istat, info);
 	return (info);
 }

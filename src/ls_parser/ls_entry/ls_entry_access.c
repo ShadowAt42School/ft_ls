@@ -6,11 +6,11 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 22:03:19 by maghayev          #+#    #+#             */
-/*   Updated: 2020/02/29 03:40:35 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/02/29 23:19:55 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "./ls_entry.h"
 
 static void		permission_parse_sticky(struct stat *istat, t_basic *basic)
 {
