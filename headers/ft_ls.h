@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 00:33:20 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:50:20 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_dir {
 	DIR				*stream;
 	struct dirent	*ent;
 	t_uint			len;
+	size_t			total_blocks;
 }				t_dir;
 
 typedef struct	s_access {
@@ -49,7 +50,7 @@ typedef struct	s_links {
 
 typedef struct	s_ownership {
 	t_bool			usr_set;
-	t_bool			grp_set;			
+	t_bool			grp_set;
 	char			*usr;
 	char			*grp;
 	size_t			usrl;
@@ -92,18 +93,21 @@ typedef struct	s_basic {
 # define FLAG_C 				5
 
 # define FDETAILS_COUNT			1
+
 extern t_uint		g_flag_fdetails[FDETAILS_COUNT];
 
 # define DDETAILS_COUNT			1
+
 extern t_uint		g_flag_ddetails[DDETAILS_COUNT];
 
 # define DATA_SELECTORS			1
+
 extern t_uint		g_index_to_flag[DATA_SELECTORS];
 
 # define DATA_PARSE_FLAGS_COUNT	1
 
-typedef void	(*parse_data)(struct stat *, t_basic *);
-extern parse_data	g_flags_data[FLAGS_COUNT];
+typedef void	(*t_parse_data)(struct stat *, t_basic *);
+extern t_parse_data	g_flags_data[FLAGS_COUNT];
 
 /*
 **	Engine
@@ -121,12 +125,12 @@ void			ls_entry_process(struct stat *istat, t_basic *entry);
 */
 void			ls_parse_directory(char *dir);
 t_basic			*ls_parse_entry(char *entry, char *display_name);
+t_list			*ls_directory(char *dir);
 
 /*
 **	Entry parsers
 */
-void			ls_parse_defaults(struct stat *istat, t_basic *basic);
-
+void			ls_entry(struct stat *istat, t_basic *basic);
 void			ls_parse_name(struct stat *stat, t_basic *basic);
 t_bool			ls_parse_long_listing();
 

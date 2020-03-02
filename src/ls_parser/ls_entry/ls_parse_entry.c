@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 01:37:42 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:52:27 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ls_parse_links(struct stat *istat, t_basic *basic)
 	basic->links.linksl = ft_numlen(&basic->links.links, FALSE);
 }
 
-void ls_parse_owner(struct stat *istat, t_basic *basic)
+void	ls_parse_owner(struct stat *istat, t_basic *basic)
 {
 	struct passwd	*st_uid;
 	struct group	*st_gid;
@@ -30,17 +30,21 @@ void ls_parse_owner(struct stat *istat, t_basic *basic)
 	{
 		st_uid = getpwuid(istat->st_uid);
 		if (!st_uid)
-			basic->owner.usrl = ft_pprintf(&basic->owner.usr, "%s", st_uid->pw_name);
+			basic->owner.usrl = ft_pprintf(&basic->owner.usr,
+				"%s", st_uid->pw_name);
 		else
-			basic->owner.usrl = ft_pprintf(&basic->owner.usr, "%s", st_uid->pw_name);
+			basic->owner.usrl = ft_pprintf(&basic->owner.usr,
+				"%s", st_uid->pw_name);
 	}
 	if (!basic->owner.grp_set)
 	{
 		st_gid = getgrgid(istat->st_gid);
 		if (!st_gid)
-			basic->owner.grpl = ft_pprintf(&basic->owner.grp, "%s", st_gid->gr_name);
+			basic->owner.grpl = ft_pprintf(&basic->owner.grp,
+				"%s", st_gid->gr_name);
 		else
-			basic->owner.grpl = ft_pprintf(&basic->owner.grp, "%s", st_gid->gr_name);
+			basic->owner.grpl = ft_pprintf(&basic->owner.grp,
+				"%s", st_gid->gr_name);
 	}
 }
 

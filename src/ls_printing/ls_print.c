@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 04:04:08 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 01:51:19 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:53:33 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ls_print(t_list *lst, t_paddings *pads)
 {
 	t_basic		*info;
 
-	while(lst)
+	while (lst)
 	{
 		info = (t_basic*)lst->content;
 		if (ls_parse_long_listing())

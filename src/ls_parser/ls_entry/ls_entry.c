@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 00:39:39 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/01 22:52:39 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_bool	ls_parse_long_listing(void)
 	return (FALSE);
 }
 
-void	ls_parse_defaults(struct stat *istat, t_basic *basic)
+void	ls_entry(struct stat *istat, t_basic *basic)
 {
 	// ls_parse_name(istat, basic);
 	basic->access.type = '-';
