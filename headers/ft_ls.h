@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:50:20 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:49:30 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ extern t_uint		g_index_to_flag[DATA_SELECTORS];
 
 # define DATA_PARSE_FLAGS_COUNT	1
 
-typedef void	(*t_parse_data)(struct stat *, t_basic *);
+typedef void	(*t_parse_data)(struct stat *, t_basic *, void *);
 extern t_parse_data	g_flags_data[FLAGS_COUNT];
 
 /*
@@ -144,7 +144,7 @@ t_bool			ls_is_flag(t_uint flag);
 **	HERE
 */
 t_bool			ls_process_a(struct dirent *ent);
-void			ls_flag_c(struct stat *istat, t_basic *basic);
+void			ls_flag_c(struct stat *istat, t_basic *basic, void *);
 void			ls_flag_big_f(struct stat *istat, t_basic *basic);
 
 /*

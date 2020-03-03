@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 00:38:09 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:52:52 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:49:46 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ls_entry_process(struct stat *istat, t_basic *entry)
 	while (index < DATA_SELECTORS)
 	{
 		if (ls_is_flag(g_index_to_flag[index]))
-			g_flags_data[g_index_to_flag[index]](istat, entry);
+			g_flags_data[g_index_to_flag[index]](istat, entry, NULL);
 		index++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:52:27 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:50:33 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ls_parse_owner(struct stat *istat, t_basic *basic)
 		st_uid = getpwuid(istat->st_uid);
 		if (!st_uid)
 			basic->owner.usrl = ft_pprintf(&basic->owner.usr,
-				"%s", st_uid->pw_name);
+				"%ld", istat->st_uid);
 		else
 			basic->owner.usrl = ft_pprintf(&basic->owner.usr,
 				"%s", st_uid->pw_name);
@@ -41,7 +41,7 @@ void	ls_parse_owner(struct stat *istat, t_basic *basic)
 		st_gid = getgrgid(istat->st_gid);
 		if (!st_gid)
 			basic->owner.grpl = ft_pprintf(&basic->owner.grp,
-				"%s", st_gid->gr_name);
+				"%ld", istat->st_gid);
 		else
 			basic->owner.grpl = ft_pprintf(&basic->owner.grp,
 				"%s", st_gid->gr_name);
