@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/02 19:49:30 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/03 23:34:41 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,34 @@ typedef struct	s_basic {
 	t_name			name;
 }				t_basic;
 
-# define FLAGS_COUNT			6
-# define FLAGS_STR				"lRrtac"
+# define FLAGS_COUNT			7
+# define FLAGS_STR				"lRrtaAc"
 # define FLAG_L					0
 # define FLAG_BR				1
 # define FLAG_R					2
 # define FLAG_T 				3
 # define FLAG_A 				4
-# define FLAG_C 				5
+# define FLAG_BA 				5
+# define FLAG_C 				6
 
-# define FDETAILS_COUNT			1
+# define GROUPS_COUNT			3
 
-extern t_uint		g_flag_fdetails[FDETAILS_COUNT];
+extern t_uint		*g_groups[GROUPS_COUNT];
+extern t_uint		g_groups_counts[GROUPS_COUNT];
 
-# define DDETAILS_COUNT			1
+# define GROUP_DATA_SELECT		0
+# define DATA_SELECT_FLAGS_C	1
 
-extern t_uint		g_flag_ddetails[DDETAILS_COUNT];
+extern t_uint		g_data_select_flags[DATA_SELECT_FLAGS_C];
+typedef void	(*t_data_func)(struct stat *, t_basic *, void *);
+extern t_data_func	g_data_select_func[DATA_SELECT_FLAGS_C];
 
-# define DATA_SELECTORS			1
+# define GROUP_FILE_SELECT		1
+# define FILE_SELECT_FLAGS_C	2
 
-extern t_uint		g_index_to_flag[DATA_SELECTORS];
-
-# define DATA_PARSE_FLAGS_COUNT	1
-
-typedef void	(*t_parse_data)(struct stat *, t_basic *, void *);
-extern t_parse_data	g_flags_data[FLAGS_COUNT];
+extern t_uint		g_file_select_flags[FILE_SELECT_FLAGS_C];
+typedef void	(*t_file_func)(struct dirent *, void *);
+extern t_file_func	g_file_select_func[FILE_SELECT_FLAGS_C];
 
 /*
 **	Engine
@@ -118,7 +121,6 @@ void			ls_engine();
 **	Processors
 */
 t_bool			ls_dir_processing(struct dirent *ent);
-void			ls_entry_process(struct stat *istat, t_basic *entry);
 
 /*
 **	Parser Engine
@@ -139,12 +141,14 @@ t_bool			ls_parse_long_listing();
 */
 void			ls_flags_parse();
 t_bool			ls_is_flag(t_uint flag);
+t_uint			ls_get_group_active_flags(t_uint group_id);
 
 /*
 **	HERE
 */
-t_bool			ls_process_a(struct dirent *ent);
-void			ls_flag_c(struct stat *istat, t_basic *basic, void *);
+void			ls_flag_a(struct dirent *ent, void *res);
+void			ls_flag_big_a(struct dirent *ent, void *res);
+void			ls_flag_c(struct stat *istat, t_basic *basic, void *res);
 void			ls_flag_big_f(struct stat *istat, t_basic *basic);
 
 /*

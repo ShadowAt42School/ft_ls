@@ -6,15 +6,15 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:37:09 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:53:43 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/03 23:08:33 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_bool	ls_process_a(struct dirent *ent)
+void	ls_flag_a(struct dirent *ent, void *res)
 {
-	if (!ls_is_flag(FLAG_A) && ent->d_name[0] == '.')
-		return (FALSE);
-	return (TRUE);
+	if (ent->d_name[0] == '.')
+		res = (void *)FALSE;
+	res = (void *)TRUE;
 }

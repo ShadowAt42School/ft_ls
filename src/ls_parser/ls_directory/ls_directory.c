@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:07:54 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:50:36 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/03 23:37:16 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@ static void		ls_space_paddings(t_basic *info, t_paddings *pads)
 	pads->usr = ft_umax(info->owner.usrl, pads->usr);
 	pads->grp = ft_umax(info->owner.grpl, pads->grp);
 	pads->size = ft_umax(info->size.sizel, pads->size);
+}
+
+static t_bool	ls_file_process(struct dirent *stream)
+{
+	t_uint	index;
+	t_uint	file_select_flags;
+	t_bool	res;
+
+	file_select_flags = ls_get_group_active_flags(GROUP_FILE_SELECT);
+	index = 0;
+	res = stream->d_name[0] != '.';
+	while (index < g_groups_counts[GROUP_FILE_SELECT])
+	{
+		if (file_select_flags & (1 << index))
+		{
+			g_file_select_func[index](stream, &res);
+			return (res);
+		}
+		index++;
+	}
+	return (res);
 }
 
 static void		ls_parse_item(char *path,
@@ -57,6 +78,8 @@ t_list			*ls_directory(char *dir)
 	ft_strlcpy(dir + curd.len++, "/", 1);
 	while ((curd.ent = readdir(curd.stream)))
 	{
+		if (!ls_file_process(curd.ent))
+			continue ;
 		ft_strlcpy(dir + curd.len, curd.ent->d_name, PATH_MAX);
 		ls_parse_item(dir, curd.ent->d_name, &pads, &lst);
 	}

@@ -6,13 +6,29 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 21:28:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:53:40 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/03 23:29:47 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
 static t_uint	g_flags;
+
+t_uint	ls_get_group_active_flags(t_uint group_id)
+{
+	t_uint	res;
+	t_uint	index;
+
+	index = 0;
+	res = 0;
+	while (index < g_groups_counts[group_id])
+	{
+		if (ls_is_flag(g_groups[group_id][index]))
+			res |= (1 << index);
+		index++;
+	}
+	return (res);
+}
 
 void	ls_flags_parse(void)
 {

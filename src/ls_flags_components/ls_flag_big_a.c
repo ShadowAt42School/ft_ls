@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_parser.c                                        :+:      :+:    :+:   */
+/*   ls_flag_big_a.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 20:34:39 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/03 22:20:58 by maghayev         ###   ########.fr       */
+/*   Created: 2020/02/26 21:37:09 by maghayev          #+#    #+#             */
+/*   Updated: 2020/03/03 23:42:54 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void		ls_parse_directory(char *dir)
+void	ls_flag_big_a(struct dirent *ent, void *res)
 {
-	t_list				*lst;
-
-	lst = ls_directory(dir);
-}
-
-t_basic		*ls_parse_entry(char *entry, char *name)
-{
-	struct stat		istat;
-	t_basic			*info;
-
-	if (lstat(entry, &istat) == -1)
-		perror(entry);
-	info = ft_calloc(1, sizeof(t_basic));
-	info->name.len = ft_pprintf(&info->name.name, "%s", name);
-	info->size.size = istat.st_size;
-	ls_entry(&istat, info);
-	return (info);
+	if ((ent->d_name[0] == '.' && ent->d_name[1] == '\0')
+		|| (ent->d_name[0] == '.'
+			&& ent->d_name[0] == '.'
+			&& ent->d_name[2] == '\0'))
+	{
+		*((t_bool*)res) = FALSE;
+		return ;
+	}
+	*((t_bool*)res) = TRUE;
 }
