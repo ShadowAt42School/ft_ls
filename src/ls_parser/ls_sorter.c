@@ -6,13 +6,13 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:57:15 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:52:53 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/04 23:05:47 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void ls_directory_sort(void)
+void			ls_sort_argument(void)
 {
-
+	return ;
 }

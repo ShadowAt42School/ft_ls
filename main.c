@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 23:46:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/03 23:19:27 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/04 23:34:39 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		main(int argc, char const **argv)
 {
-	t_option	options[FLAGS_COUNT];
+	t_option	options[FLAGS_COUNT + 1];
 
 	argc--;
 	argv++;

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 22:03:19 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:52:48 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/04 22:37:06 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ static void		permission_parse_sticky(struct stat *istat, t_basic *basic)
 void			ls_parse_type(struct stat *istat, t_basic *basic)
 {
 	if (S_ISREG(istat->st_mode))
-		basic->access.type = '-';
+		basic->access.type = T_ACCESS_FILE;
 	else if (S_ISDIR(istat->st_mode))
-		basic->access.type = 'd';
+		basic->access.type = T_ACCESS_DIR;
 	else if (S_ISCHR(istat->st_mode))
-		basic->access.type = 'c';
+		basic->access.type = T_ACCESS_CHR;
 	else if (S_ISBLK(istat->st_mode))
-		basic->access.type = 'b';
+		basic->access.type = T_ACCESS_BLK;
 	else if (S_ISFIFO(istat->st_mode))
-		basic->access.type = 'p';
+		basic->access.type = T_ACCESS_FIFO;
 	else if (S_ISLNK(istat->st_mode))
-		basic->access.type = 'l';
+		basic->access.type = T_ACCESS_LINK;
 	else if (S_ISSOCK(istat->st_mode))
-		basic->access.type = 's';
+		basic->access.type = T_ACCESS_SOC;
 }
 
 void			ls_parse_permissions(struct stat *istat, t_basic *basic)

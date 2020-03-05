@@ -1,13 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_processors.c                                    :+:      :+:    :+:   */
+/*   ls_directory.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/26 00:38:09 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/03 23:05:26 by maghayev         ###   ########.fr       */
+/*   Created: 2020/03/04 22:47:41 by maghayev          #+#    #+#             */
+/*   Updated: 2020/03/04 22:48:29 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#ifndef LS_DIRECTORY_H
+# define LS_DIRECTORY_H
+# include "ft_ls.h"
+
+void		*ls_directory(char *dir, t_paddings *pads);
+
+#endif
