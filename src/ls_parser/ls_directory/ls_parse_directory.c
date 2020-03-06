@@ -6,18 +6,38 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:48:51 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/04 23:52:42 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/05 23:32:14 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./ls_directory.h"
 
-static void		ls_recursive_process(t_list *lst)
+static char		**ls_recursive_process(t_list *lst)
 {
 	t_list	*run;
+	size_t	count;
+	char	**directories;
+	size_t	index;
 
+	count = 0;
+	index = 0;
 	run = lst;
-	return ;
+	while (run)
+	{
+		if (((t_basic *)run->content)->access.type == T_ACCESS_DIR)
+			count++;
+		run = run->next;
+	}
+	run = lst;
+	directories = (char**)ft_calloc(count, sizeof(char*));
+	while (run)
+	{
+		if (((t_basic *)run->content)->access.type == T_ACCESS_DIR)
+			directories[index++] =
+								ft_strdup(((t_basic *)run->content)->name.name);
+		run = run->next;
+	}
+	return (directories);
 }
 
 static t_bool	ls_sort_entry_default(void *entry1, void *entry2, t_bool is_rev)
@@ -51,16 +71,18 @@ static void		ls_directory_sort(t_list *lst)
 	ft_list_bubble_sort(&lst, ls_is_flag(FLAG_R), &ls_sort_entry_default);
 }
 
-void			ls_parse_directory(char *dir, t_bool is_recursive)
+void			ls_parse_directory(char *dir,
+	t_bool is_dir_name,
+	char ***directories)
 {
 	t_list		*lst;
 	t_paddings	pads;
 
-	is_recursive = FALSE;
+	is_dir_name = FALSE;
 	ft_bzero(&pads, sizeof(t_paddings));
 	lst = ls_directory(dir, &pads);
 	ls_directory_sort(lst);
 	ls_print(lst, &pads);
-	if (is_recursive)
-		ls_recursive_process(lst);
+	if (directories)
+		*directories = ls_recursive_process(lst);
 }

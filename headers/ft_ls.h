@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/04 23:44:58 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/05 23:32:12 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_bool			ls_dir_processing(struct dirent *ent);
 /*
 **	Parser Engine
 */
-void			ls_parse_directory(char *dir, t_bool is_recursive);
+void			ls_parse_directory(char *dir, t_bool is_dir_name, char ***dirs);
 t_basic			*ls_parse_entry(char *entry, char *display_name);
 
 /*
