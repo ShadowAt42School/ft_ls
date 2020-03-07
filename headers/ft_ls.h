@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/05 23:32:12 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:53:34 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_paddings {
 	size_t			usr;
 	size_t			grp;
 	size_t			size;
+	size_t			count;
 }				t_paddings;
 
 typedef struct	s_dir {
@@ -70,6 +71,7 @@ typedef struct	s_ownership {
 
 typedef struct	s_size {
 	off_t			size;
+	blkcnt_t		blks;
 	char			*rep;
 	size_t			sizel;
 }				t_size;
@@ -107,7 +109,7 @@ typedef struct	s_basic {
 # define FLAG_BA 				5
 # define FLAG_C 				6
 
-# define GROUPS_COUNT			3
+# define GROUPS_COUNT			4
 
 extern t_uint		*g_groups[GROUPS_COUNT];
 extern t_uint		g_groups_counts[GROUPS_COUNT];
@@ -133,6 +135,13 @@ extern t_uint		g_sort_select_flags[SORT_SELECT_FLAGS_C];
 typedef void	(*t_sort_func)(t_list *lst, t_bool reverse);
 extern t_sort_func	g_sort_select_func[SORT_SELECT_FLAGS_C];
 
+# define PRINT_SELECT_GROUP		3
+# define PRINT_SELECT_FLAGS_C	1
+
+extern t_uint		g_print_select_flags[PRINT_SELECT_FLAGS_C];
+typedef void	(*t_print_func)(t_basic *basic, t_paddings *pads);
+extern t_print_func	g_print_select_func[PRINT_SELECT_FLAGS_C];
+
 /*
 **	Engine
 */
@@ -147,6 +156,8 @@ t_bool			ls_dir_processing(struct dirent *ent);
 **	Parser Engine
 */
 void			ls_parse_directory(char *dir, t_bool is_dir_name, char ***dirs);
+t_basic			*ls_parse_dir_file(
+							char *dir, struct dirent *ent, t_paddings *pads);
 t_basic			*ls_parse_entry(char *entry, char *display_name);
 
 /*
@@ -170,10 +181,6 @@ void			ls_flag_big_a(struct dirent *ent, void *res);
 void			ls_flag_c(struct stat *istat, t_basic *basic, void *res);
 void			ls_flag_big_f(struct stat *istat, t_basic *basic);
 void			ls_flag_t(t_list *lst, t_bool reverse);
-
-/*
-**	Print
-*/
-void			ls_print(t_list *lst, t_paddings *pads);
+void			ls_flag_l(t_basic *basic, t_paddings *pads);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:48:51 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/05 23:32:14 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/06 19:54:30 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,16 @@ static char		**ls_recursive_process(t_list *lst)
 	return (directories);
 }
 
-static t_bool	ls_sort_entry_default(void *entry1, void *entry2, t_bool is_rev)
+void			ls_free_list(void *content, size_t size)
 {
-	t_basic	*a;
-	t_basic	*b;
+	t_basic		*basic;
 
-	a = (t_basic*)entry1;
-	b = (t_basic*)entry2;
-	if (is_rev)
-		return (ft_strcmp(a->name.name, b->name.name) < 0);
-	return (ft_strcmp(a->name.name, b->name.name) > 0);
-}
-
-static void		ls_directory_sort(t_list *lst)
-{
-	t_uint	index;
-	t_uint	sort_select_flags;
-
-	sort_select_flags = ls_get_group_active_flags(SORT_SELECT_GROUP);
-	index = 0;
-	while (index < SORT_SELECT_FLAGS_C)
-	{
-		if (sort_select_flags & (1 << index))
-		{
-			g_sort_select_func[index](lst, ls_is_flag(FLAG_R));
-			return ;
-		}
-		index++;
-	}
-	ft_list_bubble_sort(&lst, ls_is_flag(FLAG_R), &ls_sort_entry_default);
+	size = 0;
+	basic = (t_basic*)content;
+	ft_strdel(&basic->owner.usr);
+	ft_strdel(&basic->owner.grp);
+	ft_strdel(&basic->size.rep);
+	ft_strdel(&basic->name.name);
 }
 
 void			ls_parse_directory(char *dir,
@@ -81,8 +62,7 @@ void			ls_parse_directory(char *dir,
 	is_dir_name = FALSE;
 	ft_bzero(&pads, sizeof(t_paddings));
 	lst = ls_directory(dir, &pads);
-	ls_directory_sort(lst);
-	ls_print(lst, &pads);
 	if (directories)
 		*directories = ls_recursive_process(lst);
+	ft_lstdel(&lst, &ls_free_list);
 }

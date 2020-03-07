@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/04 21:29:02 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:19:18 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	ls_parse_owner(struct stat *istat, t_basic *basic)
 
 void	ls_parse_size(struct stat *istat, t_basic *basic)
 {
+	basic->size.blks = istat->st_blksize;
+	if (!basic->size.size)
+		basic->size.size = istat->st_size;
 	if (basic->size.rep)
 		return ;
 	basic->size.sizel = ft_pprintf(&basic->size.rep, "%ld", istat->st_size);

@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/04 23:25:50 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:18:45 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_basic		*ls_parse_entry(char *entry, char *name)
 		perror(entry);
 	info = ft_calloc(1, sizeof(t_basic));
 	info->name.len = ft_pprintf(&info->name.name, "%s", name);
-	info->size.size = istat.st_size;
 	ls_entry(&istat, info);
 	return (info);
 }
