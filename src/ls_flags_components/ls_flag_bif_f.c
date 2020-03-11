@@ -6,14 +6,16 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 20:43:35 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/01 22:53:44 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:52:08 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ls_flag_big_f(struct stat *istat, t_basic *basic)
+void	ls_flag_big_f(struct stat *istat, t_basic *basic, void *res)
 {
+	if (res == NULL)
+		res = NULL;
 	if (S_ISDIR(istat->st_mode))
 		basic->name.marking = '/';
 	else if (S_ISFIFO(istat->st_mode))

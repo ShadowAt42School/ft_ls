@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/06 19:53:34 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/10 22:42:54 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_paddings {
 	size_t			grp;
 	size_t			size;
 	size_t			count;
+	size_t			total_blocks;
 }				t_paddings;
 
 typedef struct	s_dir {
@@ -81,13 +82,21 @@ typedef struct	s_date {
 	char			rep[25];
 }				t_date;
 
+typedef struct	s_pname {
+	char			name[PATH_MAX + 1];
+	size_t			len;
+	t_bool			should_set;
+}				t_pname;
+
 typedef struct	s_name {
 	char			*name;
+	t_pname			pname;
 	char			marking;
 	unsigned int	len;
 }				t_name;
 
 typedef struct	s_basic {
+	char			*path;
 	t_access		access;
 	t_links			links;
 	t_ownership		owner;
@@ -99,8 +108,8 @@ typedef struct	s_basic {
 # define DEFAULT_DATE_FORMAT	"%.3s %.2s %5.*s"
 # define LONG_DATE_FORMAT		"%.3s .3s %.2s %8s %4s"
 
-# define FLAGS_COUNT			6
-# define FLAGS_STR				"lRrtaAc"
+# define FLAGS_COUNT			9
+# define FLAGS_STR				"lRrtaAcFH"
 # define FLAG_L					0
 # define FLAG_BR				1
 # define FLAG_R					2
@@ -108,8 +117,10 @@ typedef struct	s_basic {
 # define FLAG_A 				4
 # define FLAG_BA 				5
 # define FLAG_C 				6
+# define FLAG_BF 				7
+# define FLAG_BH 				8
 
-# define GROUPS_COUNT			4
+# define GROUPS_COUNT			5
 
 extern t_uint		*g_groups[GROUPS_COUNT];
 extern t_uint		g_groups_counts[GROUPS_COUNT];
@@ -121,36 +132,38 @@ extern t_uint		g_file_select_flags[FILE_SELECT_FLAGS_C];
 typedef void	(*t_file_func)(struct dirent *, void *);
 extern t_file_func	g_file_select_func[FILE_SELECT_FLAGS_C];
 
-# define DATA_SELECT_GROUP		1
-# define DATA_SELECT_FLAGS_C	1
+# define STAT_SELECT_GROUP		1
+# define STAT_SELECT_FLAGS_C	0
+
+extern t_uint		g_stat_select_flags[STAT_SELECT_FLAGS_C];
+typedef void	(*t_stat_func)(char *, struct stat *);
+extern t_stat_func	g_stat_select_func[STAT_SELECT_FLAGS_C];
+
+# define DATA_SELECT_GROUP		2
+# define DATA_SELECT_FLAGS_C	2
 
 extern t_uint		g_data_select_flags[DATA_SELECT_FLAGS_C];
 typedef void	(*t_data_func)(struct stat *, t_basic *, void *);
 extern t_data_func	g_data_select_func[DATA_SELECT_FLAGS_C];
 
-# define SORT_SELECT_GROUP		2
+# define SORT_SELECT_GROUP		3
 # define SORT_SELECT_FLAGS_C	1
 
 extern t_uint		g_sort_select_flags[SORT_SELECT_FLAGS_C];
 typedef void	(*t_sort_func)(t_list *lst, t_bool reverse);
 extern t_sort_func	g_sort_select_func[SORT_SELECT_FLAGS_C];
 
-# define PRINT_SELECT_GROUP		3
+# define PRINT_SELECT_GROUP		4
 # define PRINT_SELECT_FLAGS_C	1
 
 extern t_uint		g_print_select_flags[PRINT_SELECT_FLAGS_C];
-typedef void	(*t_print_func)(t_basic *basic, t_paddings *pads);
+typedef void	(*t_print_func)(t_list *lst, t_paddings *pads);
 extern t_print_func	g_print_select_func[PRINT_SELECT_FLAGS_C];
 
 /*
 **	Engine
 */
 void			ls_engine();
-
-/*
-**	Processors
-*/
-t_bool			ls_dir_processing(struct dirent *ent);
 
 /*
 **	Parser Engine
@@ -176,11 +189,12 @@ t_uint			ls_get_group_active_flags(t_uint group_id);
 /*
 **	HERE
 */
+void			ls_flag_big_r(char *path);
 void			ls_flag_a(struct dirent *ent, void *res);
 void			ls_flag_big_a(struct dirent *ent, void *res);
 void			ls_flag_c(struct stat *istat, t_basic *basic, void *res);
-void			ls_flag_big_f(struct stat *istat, t_basic *basic);
+void			ls_flag_big_f(struct stat *istat, t_basic *basic, void *res);
 void			ls_flag_t(t_list *lst, t_bool reverse);
-void			ls_flag_l(t_basic *basic, t_paddings *pads);
+void			ls_flag_l(t_list *lst, t_paddings *pads);
 
 #endif

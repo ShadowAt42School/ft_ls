@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:07:54 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/06 19:50:55 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:31:21 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,14 @@ static void		ls_directory_entry_rep(t_list *lst, t_paddings *pads)
 {
 	t_uint	index;
 	t_uint	print_select_flags;
-	t_list	*lstc;
 
-	lstc = lst;
 	print_select_flags = ls_get_group_active_flags(PRINT_SELECT_GROUP);
 	index = 0;
 	while (index < SORT_SELECT_FLAGS_C)
 	{
 		if (print_select_flags & (1 << index))
 		{
-			while (lstc)
-			{
-				g_print_select_func[index](lstc->content, pads);
-				lstc = lstc->next;
-			}
+			g_print_select_func[index](lst, pads);
 			return ;
 		}
 		index++;
@@ -89,6 +83,7 @@ void			*ls_directory(char *dir, t_paddings *pads)
 	t_list		*lst;
 
 	lst = NULL;
+	ft_bzero(&curd, sizeof(t_dir));
 	curd.stream = opendir(dir);
 	curd.len = ft_strlen(dir);
 	ft_strlcpy(dir + curd.len++, "/", 1);
@@ -97,6 +92,7 @@ void			*ls_directory(char *dir, t_paddings *pads)
 		ft_strlcpy(dir + curd.len, curd.ent->d_name, curd.ent->d_namlen);
 		if (!(item = ls_parse_dir_file(dir, curd.ent, pads)))
 			continue ;
+		pads->total_blocks += item->size.blks;
 		ft_lstadd(&lst, ft_lstnewp(item, 0));
 	}
 	closedir(curd.stream);

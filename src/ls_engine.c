@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:30:31 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/06 13:08:50 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/10 23:40:35 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,44 @@ static void		ls_parse_engine(char *path)
 	if (stat(path, &item) == -1)
 		perror(path);
 	if (S_ISDIR(item.st_mode))
+	{
+		if (ls_is_flag(FLAG_BR))
+		{
+			ls_flag_big_r(path);
+			return ;
+		}
 		ls_parse_directory(path, FALSE, NULL);
+	}
 	else
+	{
 		ls_parse_entry(path, path);
+	}
+}
+
+static t_bool	ls_arguments_sort(char *argum1, char *argum2)
+{
+	struct stat		istat1;
+	struct stat		istat2;
+
+	if (ls_is_flag(FLAG_BH))
+	{
+		stat(argum1, &istat1);
+		stat(argum2, &istat2);
+	}
+	else
+	{
+		lstat(argum1, &istat1);
+		lstat(argum2, &istat2);
+	}
+	if (S_ISDIR(istat1.st_mode) && S_ISDIR(istat2.st_mode))
+		return (ft_strcmp(argum1, argum2) > 0);
+	else if (!S_ISDIR(istat1.st_mode) && !S_ISDIR(istat2.st_mode))
+		return (ft_strcmp(argum1, argum2) > 0);
+	else if (!S_ISDIR(istat1.st_mode) && S_ISDIR(istat2.st_mode))
+		return (FALSE);
+	else if (S_ISDIR(istat1.st_mode) && !S_ISDIR(istat2.st_mode))
+		return (TRUE);
+	return (FALSE);
 }
 
 void			ls_engine(void)
@@ -30,7 +65,7 @@ void			ls_engine(void)
 	static char		path[PATH_MAX + 1];
 
 	ls_flags_parse();
-	// add argument sorting
+	cl_sort_arguments(&ls_arguments_sort);
 	while ((argument = cl_get_argument()))
 	{
 		ft_memcpy(path, argument, ft_strlen(argument));

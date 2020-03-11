@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/06 13:19:18 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/10 21:23:46 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ls_parse_owner(struct stat *istat, t_basic *basic)
 
 void	ls_parse_size(struct stat *istat, t_basic *basic)
 {
-	basic->size.blks = istat->st_blksize;
+	basic->size.blks = istat->st_blocks;
 	if (!basic->size.size)
 		basic->size.size = istat->st_size;
 	if (basic->size.rep)
@@ -75,5 +75,18 @@ void	ls_parse_date_format(struct stat *istat, t_basic *basic)
 			(datetime + 8),
 			is_year ? 4 : 5,
 			is_year ? (datetime + 20) : (datetime + 11));
+	}
+}
+
+void	ls_parse_name(struct stat *istat, t_basic *basic)
+{
+	if (S_ISLNK(istat->st_mode))
+	{
+		if (basic->name.pname.should_set && basic->name.pname.len == 0)
+		{
+			basic->name.pname.len = istat->st_size + 4;
+			ft_memcpy(basic->name.pname.name, " -> ", 4);
+			readlink(basic->path, basic->name.pname.name + 4, istat->st_size);
+		}
 	}
 }

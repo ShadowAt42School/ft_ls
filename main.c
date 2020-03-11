@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 23:46:38 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/05 23:05:03 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:50:02 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main(int argc, char const **argv)
 	options[FLAG_T] = (t_option){.shortc = 't'};
 	options[FLAG_C] = (t_option){.shortc = 'c'};
 	options[FLAG_BA] = (t_option){.shortc = 'A'};
+	options[FLAG_BF] = (t_option){.shortc = 'F'};
 	cl_init((char **)argv, options, FLAGS_COUNT + 1);
 	ls_engine();
 	return (0);
