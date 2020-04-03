@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 22:48:51 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/09 22:06:07 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/03/27 17:46:30 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ static char		**ls_recursive_process(t_list *lst)
 	while (run)
 	{
 		if (((t_basic *)run->content)->access.type == T_ACCESS_DIR)
-			directories[index++] =
+		{
+			directories[index] =
 								ft_strdup(((t_basic *)run->content)->name.name);
+			index++;
+		}
 		run = run->next;
 	}
 	return (directories);
@@ -50,6 +53,7 @@ void			ls_free_list(void *content, size_t size)
 	ft_strdel(&basic->owner.grp);
 	ft_strdel(&basic->size.rep);
 	ft_strdel(&basic->name.name);
+	ft_memdel(&content);
 }
 
 void			ls_parse_directory(char *dir,

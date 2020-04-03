@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 01:12:58 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/10 21:23:46 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/04/02 20:50:07 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,21 @@ void	ls_parse_owner(struct stat *istat, t_basic *basic)
 
 void	ls_parse_size(struct stat *istat, t_basic *basic)
 {
-	basic->size.blks = istat->st_blocks;
-	if (!basic->size.size)
-		basic->size.size = istat->st_size;
-	if (basic->size.rep)
-		return ;
-	basic->size.sizel = ft_pprintf(&basic->size.rep, "%ld", istat->st_size);
+	if (basic->access.type == T_ACCESS_BLK
+		|| basic->access.type == T_ACCESS_CHR)
+	{
+		basic->size.is_spec = TRUE;
+		basic->size.major = (istat->st_rdev & 0xff000000) >> 24;
+		basic->size.minor = istat->st_rdev & 0x00ffffff;
+		basic->size.sizel = 8;
+	} else {
+		basic->size.blks = istat->st_blocks;
+		if (!basic->size.size)
+			basic->size.size = istat->st_size;
+		if (basic->size.rep)
+			return ;
+		basic->size.sizel = ft_pprintf(&basic->size.rep, "%ld", istat->st_size);
+	}
 }
 
 void	ls_parse_date_format(struct stat *istat, t_basic *basic)

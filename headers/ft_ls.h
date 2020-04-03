@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/10 22:42:54 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/04/02 19:05:22 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,13 @@ typedef struct	s_ownership {
 }				t_ownership;
 
 typedef struct	s_size {
+	t_uint			major;
+	t_uint			minor;
 	off_t			size;
 	blkcnt_t		blks;
-	char			*rep;
 	size_t			sizel;
+	t_bool			is_spec;
+	char			*rep;
 }				t_size;
 
 typedef struct	s_date {

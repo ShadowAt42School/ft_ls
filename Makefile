@@ -6,7 +6,7 @@
 #    By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/27 21:42:08 by maghayev          #+#    #+#              #
-#    Updated: 2020/02/29 21:27:49 by maghayev         ###   ########.fr        #
+#    Updated: 2020/03/31 20:16:26 by maghayev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,10 @@ DEPS = ft_stdio/
 all: $(NAME)
 
 local: | cleanc $(OBJECT)
-	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT)
+	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT) -o $(NAME)
 
 $(NAME): | deps $(OBJECT)
-	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT)
+	$(CC) $(CFLAGS) $(LIBS) $(ALIBS) -g main.c $(OBJECT) -o $(NAME)
 
 deps: makedep
 	@echo $(UNDERLINE)

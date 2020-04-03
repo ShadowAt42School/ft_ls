@@ -3,3 +3,5 @@ a.out.*
 src/**/*.o
 libs/
 test.c
+ft_ls
+ft_ls.*
