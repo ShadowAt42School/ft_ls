@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:28:40 by maghayev          #+#    #+#             */
-/*   Updated: 2020/04/02 19:05:22 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/04/05 20:24:56 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,11 @@ extern t_print_func	g_print_select_func[PRINT_SELECT_FLAGS_C];
 **	Engine
 */
 void			ls_engine();
+
+/*
+**	Error
+*/
+char			*ls_error(char *prefix);
 
 /*
 **	Parser Engine

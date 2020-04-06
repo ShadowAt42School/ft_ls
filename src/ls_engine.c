@@ -6,7 +6,7 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 20:30:31 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/10 23:40:35 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/04/05 13:30:43 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		ls_parse_engine(char *path)
 {
 	struct stat		item;
 
-	if (stat(path, &item) == -1)
+	if (lstat(path, &item) == -1)
 		perror(path);
 	if (S_ISDIR(item.st_mode))
 	{

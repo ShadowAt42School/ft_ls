@@ -6,11 +6,11 @@
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:45:13 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/06 19:12:07 by maghayev         ###   ########.fr       */
+/*   Updated: 2020/04/05 17:04:12 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./ls_directory.h"
+#include "ft_ls.h"
 
 static void		ls_space_paddings(t_basic *info, t_paddings *pads)
 {

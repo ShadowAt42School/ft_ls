@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_directory.h                                     :+:      :+:    :+:   */
+/*   ls_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghayev <maghayev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/04 22:47:41 by maghayev          #+#    #+#             */
-/*   Updated: 2020/03/04 22:48:29 by maghayev         ###   ########.fr       */
+/*   Created: 2020/03/01 16:07:54 by maghayev          #+#    #+#             */
+/*   Updated: 2020/04/05 20:24:33 by maghayev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LS_DIRECTORY_H
-# define LS_DIRECTORY_H
-# include "ft_ls.h"
+#include <errno.h>
+#include "ft_ls.h"
 
-void		*ls_directory(char *dir, t_paddings *pads);
+char	*ls_error(char *prefix)
+{
+	char	*error_string;
 
-#endif
+	error_string = NULL;
+	ft_pprintf(&error_string, "ft_ls: %s: %s", prefix, strerror(errno));
+	return (error_string);
+}
